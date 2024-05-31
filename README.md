@@ -1,29 +1,39 @@
-"scripts": {
-"dev": "vite --host",
-"build": "vite build --base=./",
-"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-"preview": "vite preview"
-},
+cách xóa commit trong branch
+https://graphite.dev/guides/how-to-delete-a-git-commit
 
-- "dev": "vite --host",
-  VITE v5.2.12 ready in 790 ms
+1.Cấu hình hành vi kết thúc dòng của Git:
 
-➜ Local: http://localhost:5173/
-➜ Network: http://172.19.32.1:5173/
-➜ Network: http://192.168.1.9:5173/
-➜ Network: http://192.168.137.1:5173/
-➜ press h + enter to show help
+Mở terminal hoặc cửa sổ lệnh trong thư mục dự án của bạn.
 
-- "build": "vite build --base=./",
+Chạy lệnh sau để kiểm tra cấu hình Git hiện tại cho ký tự kết thúc dòng:
 
-buidl folder dist, đẩy dự án lên production
-thêm ./ trước đường dẫn path
+Bash
+git config --global core.autocrlf
 
-- "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-  sytax code error
+Kết quả sẽ là true (chuyển đổi tự động), false (không chuyển đổi) hoặc input (chuyển đổi khi commit, giữ nguyên khi checkout).
 
-- "preview": "vite preview"
-  nhảy vào dist check trước khi đẩy lên production
-  preview production
+Chọn cài đặt phù hợp dựa trên sở thích của bạn:
 
-luồng code từ main.jsx => id: root (index.html) => render: App
+Để sử dụng LF thống nhất trên tất cả các hệ thống (bao gồm Windows), hãy đặt core.autocrlf thành input:
+
+Bash
+git config --global core.autocrlf input
+
+Để tự động chuyển đổi sang CRLF trên Windows và giữ nguyên LF trên các hệ thống khác, hãy đặt core.autocrlf thành true:
+
+Bash
+git config --global core.autocrlf true
+
+2. Chuẩn hóa thủ công ký tự kết thúc dòng (chỉ thực hiện một lần):
+
+Nếu bạn muốn xử lý ký tự kết thúc dòng thủ công một lần, hãy sử dụng cờ --renormalize với git add:
+
+Bash
+git add --renormalize README.md
+
+Lệnh này sẽ chuyển đổi ký tự kết thúc dòng trong README.md để phù hợp với mặc định của hệ thống bạn và cập nhật chỉ mục Git cho phù hợp.
+
+Chọn cách phù hợp:
+
+Nếu bạn cộng tác với các nhà phát triển trên các hệ điều hành khác nhau, hãy đặt core.autocrlf thành input để đảm bảo sử dụng LF thống nhất.
+Nếu bạn chủ yếu làm việc trên Windows và muốn chuyển đổi tự động sang CRLF, hãy đặt core.autocrlf thành true.
